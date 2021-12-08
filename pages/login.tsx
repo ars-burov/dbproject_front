@@ -12,10 +12,11 @@ const Login: NextPage = ({}) => {
     const [password, setPassword] = useState('');
 
     const onSubmit = async () => {
-        console.log(username, password);
         setCookies('username', username);
         setCookies('password', password);
-        router.push('/customers');
+
+        // code == 200 : setCoockies('token', token)
+        router.push('/userinfo');
     }
 
     return (

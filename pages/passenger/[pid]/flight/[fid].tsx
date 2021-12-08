@@ -72,10 +72,6 @@ const PassengerFlightPage: NextPage = ({}) => {
         alert('Submission ok!')
     }
 
-    console.log(router.query);
-    console.log(cabins);
-    console.log(meals);
-
     return (
         <div className={styles.container}>
             <div className={styles.column}>

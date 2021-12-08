@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import styles from '../../styles/Customer.module.css'
 import { setCookies } from 'cookies-next';
 import FlightCard from '../../components/FlightCard';
+import { API_URL } from '../api/requests';
 
 
 interface Passenger {
@@ -26,31 +27,48 @@ const PassengerPage: NextPage = ({}) => {
     useEffect(() => {
         const pid = router.query.pid;
 
-        let loadedCustomer: Partial<Passenger>;
-        if (pid == 'new') {
-            loadedCustomer = {};
-        } else {
-            loadedCustomer = {
-                id: '1',
-                firstname: 'Arsenii',
-                lastname: 'Burov',
-                nationality: 'Russian',
-                gender: 'M',
-                passportNo: '4511029123',
-                passportExpirationDate: '01/25',
-                dob: '03/92',
-            }
-        }
+        (async () => {
+            let loadedPassenger: Partial<Passenger>;
+            if (pid == 'new') {
+                loadedPassenger = {};
+            } else {
+                // const passengerData = await fetch(`${API_URL}/passenger/${pid}`)
+                //     .then((res) => res.json())
+                //     .catch(() => null);
 
-        setPassenger(loadedCustomer);
-        setFlights(['1', '2', '3']);
+                // if (!passengerData) return;
+
+                // loadedPassenger = {
+                //     id: passengerData.pid,
+                //     firstname: passengerData.p_fname,
+                //     lastname: passengerData.p_lname,
+                //     nationality: passengerData.p_nationality,
+                //     gender: passengerData.p_gender,
+                //     passportNo: passengerData.p_passportno,
+                //     passportExpirationDate: passengerData.p_passexdate,
+                //     dob: passengerData.p_dob,
+                // }
+
+                loadedPassenger = {
+                    id: '1',
+                    firstname: 'Arsenii',
+                    lastname: 'Burov',
+                    nationality: 'Russian',
+                    gender: 'M',
+                    passportNo: '4511029123',
+                    passportExpirationDate: '01/25',
+                    dob: '03/92',
+                }
+            }
+
+            setPassenger(loadedPassenger);
+            setFlights(['1', '2', '3']);
+        })()
     }, [router]);
 
     const onSubmit = () => {
         alert('Submission ok!')
     }
-
-    console.log(router.query);
 
     return (
         <div className={styles.container}>
@@ -92,7 +110,7 @@ const PassengerPage: NextPage = ({}) => {
                 </label>
                 <label>
                     Passport Expiration Date: <input
-                        type='number'
+                        type='text'
                         onChange={(e) => setPassenger({...passenger as Passenger, passportExpirationDate: e.target.value})}
                         value={passenger?.passportExpirationDate}
                     />
@@ -104,7 +122,7 @@ const PassengerPage: NextPage = ({}) => {
                         value={passenger?.dob}
                     />
                 </label>
-                <button type="submit" onClick={() => onSubmit()}>Submit customer info</button>
+                <button type="submit" onClick={() => onSubmit()}>Submit passenger info</button>
             </div>
             <br />
             <div className={styles.row}>
