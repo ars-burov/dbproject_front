@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import styles from '../styles/Login.module.css'
 import { setCookies } from 'cookies-next';
+import { API_URL } from './api/requests';
 
 
 const Login: NextPage = ({}) => {
@@ -12,11 +13,24 @@ const Login: NextPage = ({}) => {
     const [password, setPassword] = useState('');
 
     const onSubmit = async () => {
-        setCookies('username', username);
-        setCookies('password', password);
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('password', password);
 
-        // code == 200 : setCoockies('token', token)
-        router.push('/userinfo');
+        const respBody = await fetch(`${API_URL}/login`, {
+            method: 'POST',
+            body: formData,
+        })
+            .then((res) => res.json())
+            .catch((e) => {
+                alert('An error occured');
+                return undefined;
+            });
+        
+        if (respBody !== undefined) {
+            setCookies('access', respBody['access'])
+            router.push('/userinfo');
+        }
     }
 
     return (

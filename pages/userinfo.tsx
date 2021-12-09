@@ -10,32 +10,38 @@ import { API_URL } from './api/requests';
 
 
 const UserInfo: NextPage = ({}) => {
-    const router = useRouter();
-    
     const [customerList, setCustomerList] = useState<string[]>([]);
     const [passengerList, setPassengerList] = useState<string[]>([]);
     const [invoiceList, setInvoiceList] = useState<string[]>([]);
 
     useEffect(() => {
 
-        const uid = getCookie('username');
+        const token = getCookie('access');
 
         (async () => {
-            const paymentData = await fetch(`${API_URL}/customer/${uid}`)
-                    .then((res) => res.json())
-                    .catch(() => null);
+            const paymentData = await fetch(`${API_URL}/userinfo`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
+                .then((res) => res.json())
+                .catch((e) => {
+                    console.log(e);
+                    alert('Could not load');
+                    return undefined;
+                });
             
-            // const customerIds = paymentData?.Customers.map((customer: any) => customer.c_id);
-            // const passengerIds = paymentData?.Passengers.map((passenger: any) => passenger.pid);
-            // const invioceIds = paymentData?.Invoices.map((invoice: any) => invoice.id);
+            if (!paymentData) return;
 
-            // setCustomerList(customerIds);
-            // setPassengerList(passengerIds);
-            // setInvoiceList(invioceIds);
+            console.log(paymentData);
             
-            setCustomerList(['1', '2', '3']);
-            setPassengerList(['1', '2', '3']);
-            setInvoiceList(['1', '2', '3']);
+            const customerIds = paymentData?.Customers.map((customer: any) => customer.c_id);
+            const passengerIds = paymentData?.Passengers.map((passenger: any) => passenger.pid);
+            const invioceIds = paymentData?.Invoices?.map((invoice: any) => invoice.inv_id);
+
+            setCustomerList(customerIds);
+            setPassengerList(passengerIds);
+            setInvoiceList(invioceIds);
         })();
     }, []);
 
@@ -57,7 +63,7 @@ const UserInfo: NextPage = ({}) => {
             <br />
             <div className={styles.row}>
                 {
-                    invoiceList.map((id) => <InvoiceCard key={id} id={id} />)
+                    invoiceList?.map((id) => <InvoiceCard key={id} id={id} />)
                 }
             </div>
         </div>

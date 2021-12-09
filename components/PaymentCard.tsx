@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import 'react';
 
-const PaymentCard = ({ iid, pid }: {pid?: string; iid?: string}) => {
+const PaymentCard = ({ iid, pid }: {pid?: string; iid: string}) => {
     const router = useRouter();
 
     const onCardClick = () => {
