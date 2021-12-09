@@ -35,8 +35,8 @@ const UserInfo: NextPage = ({}) => {
 
             console.log(paymentData);
             
-            const customerIds = paymentData?.Customers.map((customer: any) => customer.c_id);
-            const passengerIds = paymentData?.Passengers.map((passenger: any) => passenger.pid);
+            const customerIds = paymentData?.Customers?.map((customer: any) => customer.c_id);
+            const passengerIds = paymentData?.Passengers?.map((passenger: any) => passenger.pid);
             const invioceIds = paymentData?.Invoices?.map((invoice: any) => invoice.inv_id);
 
             setCustomerList(customerIds);
