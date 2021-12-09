@@ -110,7 +110,7 @@ const CustomerPage: NextPage = ({}) => {
 
         const formData = new FormData();
         formData.append('pid', customer.pid!);
-        formData.append('c_id', '123');
+        formData.append('c_id', Math.floor(Math.random() * 10000).toString());
         formData.append('c_street', customer.street!);
         formData.append('c_city', customer.city!);
         formData.append('c_cntry', customer.country!);

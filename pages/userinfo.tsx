@@ -49,14 +49,14 @@ const UserInfo: NextPage = ({}) => {
         <div className={styles.container}>
             <div className={styles.row}>
                 {
-                    passengerList.map((id) => <PassengerCard key={id} id={id} />)
+                    passengerList?.map((id) => <PassengerCard key={id} id={id} />)
                 }
                 <PassengerCard />
             </div>
             <br />
             <div className={styles.row}>
                 {
-                    customerList.map((id) => <CustomerCard key={id} id={id} />)
+                    customerList?.map((id) => <CustomerCard key={id} id={id} />)
                 }
                 <CustomerCard />
             </div>

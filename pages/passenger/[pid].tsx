@@ -109,7 +109,7 @@ const PassengerPage: NextPage = ({}) => {
         const token = getCookie('access');
 
         const formData = new FormData();
-        formData.append('pid', '123');
+        formData.append('pid', Math.floor(Math.random() * 10000).toString());
         formData.append('p_fname', passenger.firstname!);
         formData.append('p_lname', passenger.lastname!);
         formData.append('p_nationality', passenger.nationality!);

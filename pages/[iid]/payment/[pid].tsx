@@ -32,7 +32,7 @@ const PaymentPage: NextPage = ({}) => {
         (async () => {
             let payment: Partial<Payment>;
             if (pid === 'new') {
-                payment = { id: '1234' };
+                payment = {};
             } else {
                 const paymentRawData = await fetch(`${API_URL}/payment/${pid}`, {
                     headers: {
@@ -77,7 +77,7 @@ const PaymentPage: NextPage = ({}) => {
         formData.append('p_date', '2021-12-09');
         formData.append('p_method', payment.method!);
         formData.append('pay_fname', payment.payFirstName!);
-        formData.append('pay_id', payment.id!);
+        formData.append('pay_id', Math.floor(Math.random() * 10000).toString());
         formData.append('pay_lname', payment.payLastName!);
 
         const respBody = await fetch(`${API_URL}/payment/new`, {
